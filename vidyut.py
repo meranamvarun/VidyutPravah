@@ -127,15 +127,15 @@ class StateTimeStampData(threading.Thread):
         return self.state_url.split("/")[-1]
 
     def run(self):
-        f = open(self.filename+".csv", "w")
-        f.write("DATE(YYYY/MM/DD),START TIME(HH:MM),END TIME(HH:MM),CEP(Rs),YEP(Rs),CPP(MW),"
-                "PPP(MW),DMT(MW),DMY(MW),SDP(MU),TESY(MU)\n")
+        f = open(self.filename+".tsv", "w")
+        f.write("DATE(YYYY/MM/DD)\tSTART TIME(HH:MM)\tEND TIME(HH:MM)\tCEP(Rs)\tYEP(Rs)\tCPP(MW)\t"
+                "PPP(MW)\tDMT(MW)\tDMY(MW)\tSDP(MU)\tTESY(MU)\n")
         f.close()
         date_time = datetime.datetime.now()
         while date_time.day - datetime.datetime.now().day <= 7:
             data = self.state.get_values()
-            f = open(self.filename+".csv", "a")
-            f.write(",".join(data))
+            f = open(self.filename+".tsv", "a")
+            f.write("\t".join(data))
             f.close()
             sleep(900)
         f.close()
@@ -147,15 +147,3 @@ if __name__ == '__main__':
     for state in state_links:
         thread = StateTimeStampData(state)
         thread.start()
-
-
-
-
-
-
-
-
-
-
-
-
