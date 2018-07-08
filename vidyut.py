@@ -146,7 +146,7 @@ if __name__ == '__main__':
     nation = VidyutPravah()
     state_links = nation.get_all_state_links()
     state_object_pool = [StateTimeStampData(link) for link in state_links]
-    pool = mp.Pool(len(state_links))
+    pool = mp.Pool(4)
     pool.map(worker, (obj for obj in state_object_pool))
     pool.close()
     pool.join()
