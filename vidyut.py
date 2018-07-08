@@ -1,9 +1,9 @@
 
 from bs4 import BeautifulSoup
 import requests
-import threading
 from time import sleep
 import datetime
+import multiprocessing as mp
 
 
 class VidyutPravah:
@@ -115,10 +115,9 @@ class VidyutPravahState(VidyutPravah):
 
 
 
-class StateTimeStampData(threading.Thread):
+class StateTimeStampData():
 
     def __init__(self, state_url):
-        threading.Thread.__init__(self)
         self.state_url = state_url
         self.filename = self.get_state_name_from_url()
         self.state = VidyutPravahState(self.state_url)
@@ -140,10 +139,14 @@ class StateTimeStampData(threading.Thread):
             sleep(900)
         f.close()
 
+def worker(obj):
+    return obj.run()
 
 if __name__ == '__main__':
     nation = VidyutPravah()
     state_links = nation.get_all_state_links()
-    for state in state_links:
-        thread = StateTimeStampData(state)
-        thread.start()
+    state_object_pool = [StateTimeStampData(link) for link in state_links]
+    pool = mp.Pool(len(state_links)
+    pool.map(worker, ((obj) for obj in state_object_pool))
+    pool.close()
+    pool.join()
