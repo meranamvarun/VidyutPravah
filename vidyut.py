@@ -130,23 +130,27 @@ class StateTimeStampData():
         f.write("DATE(YYYY/MM/DD)\tSTART TIME(HH:MM)\tEND TIME(HH:MM)\tCEP(Rs)\tYEP(Rs)\tCPP(MW)\t"
                 "PPP(MW)\tDMT(MW)\tDMY(MW)\tSDP(MU)\tTESY(MU)\n")
         f.close()
-        date_time = datetime.datetime.now()
-        while date_time.day - datetime.datetime.now().day <= 7:
-            data = self.state.get_values()
+        f = open(self.filename+".tsv", "r")
+        text = f.read()
+        f.close()
+        last_line = text.split("\n")[-1]
+        last_line_data = last_line.split("\t")
+        data = self.state.get_values()
+        if data != last_line_data
             f = open(self.filename+".tsv", "a")
             f.write("\t".join(data))
             f.close()
-            sleep(900)
-        f.close()
 
-def worker(obj):
-    return obj.run()
+
 
 if __name__ == '__main__':
+    date_time = datetime.datetime.now()
+    day = date_time.day
     nation = VidyutPravah()
     state_links = nation.get_all_state_links()
-    state_object_pool = [StateTimeStampData(link) for link in state_links]
-    pool = mp.Pool(4)
-    pool.map(worker, (obj for obj in state_object_pool))
-    pool.close()
-    pool.join()
+    while day - datetime.datetime.now().day <= 7:
+        for state_link in state_links:
+            state = StateTimeStampData(state_link)
+            state.run()
+            
+    
