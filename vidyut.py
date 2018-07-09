@@ -158,5 +158,6 @@ if __name__ == '__main__':
             if count == 0:
                 state.run_initial()
             state.run()
+        count+=1
             
     
