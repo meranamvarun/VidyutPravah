@@ -111,7 +111,7 @@ class VidyutPravahState(VidyutPravah):
         ps = self.shortage_yesterday_during_peak(state_soup)  # shortage during peak (MU)
         stey = self.shortage_yesterday_energy(state_soup)  # total energy shortage (MU)
 
-        return [now_date.strftime("%y/%m/%d"), start_time, end_time, cep, yep, cpp, ppp, cd, yd, ps, stey+"\n"]
+        return [now_date.strftime("%y/%m/%d"), start_time, end_time, cep, yep, cpp, ppp, cd, yd, ps, stey]
 
 
 
@@ -138,7 +138,7 @@ class StateTimeStampData():
         data = self.state.get_values()
         if data != last_line_data
             f = open(self.filename+".tsv", "a")
-            f.write("\t".join(data))
+            f.write("\t".join(data)+"\n")
             f.close()
 
 
