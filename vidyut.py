@@ -124,12 +124,15 @@ class StateTimeStampData():
 
     def get_state_name_from_url(self):
         return self.state_url.split("/")[-1]
-
-    def run(self):
+    
+    def run_initial():
         f = open(self.filename+".tsv", "w")
         f.write("DATE(YYYY/MM/DD)\tSTART TIME(HH:MM)\tEND TIME(HH:MM)\tCEP(Rs)\tYEP(Rs)\tCPP(MW)\t"
                 "PPP(MW)\tDMT(MW)\tDMY(MW)\tSDP(MU)\tTESY(MU)\n")
         f.close()
+        
+
+    def run(self):
         f = open(self.filename+".tsv", "r")
         text = f.read()
         f.close()
@@ -148,9 +151,12 @@ if __name__ == '__main__':
     day = date_time.day
     nation = VidyutPravah()
     state_links = nation.get_all_state_links()
+    count = 0
     while day - datetime.datetime.now().day <= 7:
         for state_link in state_links:
             state = StateTimeStampData(state_link)
+            if count == 0:
+                state.run_initial()
             state.run()
             
     
