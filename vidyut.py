@@ -125,7 +125,7 @@ class StateTimeStampData():
     def get_state_name_from_url(self):
         return self.state_url.split("/")[-1]
     
-    def run_initial():
+    def run_initial(self):
         f = open(self.filename+".tsv", "w")
         f.write("DATE(YYYY/MM/DD)\tSTART TIME(HH:MM)\tEND TIME(HH:MM)\tCEP(Rs)\tYEP(Rs)\tCPP(MW)\t"
                 "PPP(MW)\tDMT(MW)\tDMY(MW)\tSDP(MU)\tTESY(MU)\n")
@@ -139,7 +139,7 @@ class StateTimeStampData():
         last_line = text.split("\n")[-1]
         last_line_data = last_line.split("\t")
         data = self.state.get_values()
-        if data != last_line_data
+        if data != last_line_data:
             f = open(self.filename+".tsv", "a")
             f.write("\t".join(data)+"\n")
             f.close()
