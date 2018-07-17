@@ -155,11 +155,16 @@ if __name__ == '__main__':
         for state_link in state_links:
             state = StateTimeStampData(state_link)
             if count == 0:
+                count_2 = 0
                 while True:
                     try:
                         state.run_initial()
                         break;
                     except TimeoutError:
-                        pass
+                        count_2+=1
+                        if count_2 >= 100:
+                            sys.exit(1)
+                    else:
+                        count_2=0
             state.run()
         count+=1
