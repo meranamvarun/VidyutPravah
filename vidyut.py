@@ -1,4 +1,3 @@
-
 from bs4 import BeautifulSoup
 import requests
 from time import sleep
@@ -156,8 +155,11 @@ if __name__ == '__main__':
         for state_link in state_links:
             state = StateTimeStampData(state_link)
             if count == 0:
-                state.run_initial()
+                while True:
+                    try:
+                        state.run_initial()
+                        break;
+                    except TimeoutError:
+                        pass
             state.run()
         count+=1
-            
-    
